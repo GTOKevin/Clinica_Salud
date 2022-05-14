@@ -6,10 +6,13 @@ using System.Web.Mvc;
 
 namespace Web_Cita_Medicas.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
+   
         public ActionResult Index()
         {
+       
             return View();
         }
 
