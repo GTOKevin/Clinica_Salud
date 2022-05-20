@@ -1,0 +1,121 @@
+﻿@model Web_Cita_Medicas.Models.ViewDoctorModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <div id="divListar">
+        <div class="row my-2">
+
+            <button class="btn btn-success ml-auto" onclick="btnAction('new')">Nuevo</button>
+        </div>
+
+
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Primer Apellido</th>
+                    <th scope="col">Segundo Apellido</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Especialidad</th>
+                </tr>
+            </thead>
+            <tbody id="bodyTable">
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    @*<td>@mdo</td>*@
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    @*<td>@fat</td>*@
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                    @*<td>@twitter</td>*@
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="divRegister" style="display:none;">
+        <div class="row my-2">
+            <button class="btn btn-danger ml-auto" onclick="btnAction('cancel')">Cancelar</button>
+        </div>
+        <form id="formRegister">
+            <div class="row">
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Nombres</label>
+                    <input type="text" autocomplete="off" class="form-control" name="nombres" placeholder="Ingrese nombres">
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Primer Apellido</label>
+                    <input type="text" autocomplete="off" class="form-control" name="primer_apellido" placeholder="Ingrese su primer apellido">
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Segundo Apellido</label>
+                    <input type="text" autocomplete="off" class="form-control" name="segundo_apellido" placeholder="Ingrese su segundo apellido">
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Especialidad</label>
+                    <select class="form-control" name="id_especialidad">
+                        <option value="" selected>..Seleccione..</option>
+                        @foreach (var item in Model.ListaEspecialidad)
+                        {
+                            <option value="@item.id_especialidad">@item.nombre_especialidad</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Genero</label>
+                    <select class="form-control" name="id_genero">
+                        <option value="" selected>..Seleccione..</option>
+                        @foreach (var item in Model.ListaGenero)
+                        {
+                            <option value="@item.id_genero">@item.nombre_genero</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Telefono</label>
+                    <input type="text" autocomplete="off" class="form-control" name="telefono_doctor" placeholder="Ingrese su telefono">
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Correo</label>
+                    <input type="text" autocomplete="off" class="form-control" name="correo_doctor" placeholder="Ingrese su correo">
+                </div>
+
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Tipo Documento</label>
+                    <select class="form-control" name="id_tipo_documento">
+                        <option value="" selected>..Seleccione..</option>
+                        @foreach (var item in Model.ListaTipoDocumento)
+                        {
+                            <option value="@item.id_tipo_documento">@item.nombre_documento</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Nro Documento</label>
+                    <input type="text" autocomplete="off" class="form-control" name="dni_doctor" placeholder="Ingrese su documento">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+<script>
+    const urlRegistroDoc = "@Url.Action("RegistrarDoctor", "Doctor")";
+     const urlListarDoc = "@Url.Action("ListarDoctor", "Doctor")";
+</script>
+<script src="~/Scripts/Doctor/doctor.js"></script>
