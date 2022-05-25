@@ -50,5 +50,43 @@ namespace Web_Cita_Medicas.Logica
             oEspecialidadRes.oHeader = header;
             return oEspecialidadRes;
         }
+
+        public Header RegistrarEspecialidades(Especialidad enti)
+        {
+            Header header = new Header();
+            try
+            {
+                using (SqlConnection cn = Conexion.Conectar())
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("sp_registrar_Especialidad", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@nombre_especialidad", enti.nombre_especialidad);
+                    int respuesta = cmd.ExecuteNonQuery();
+
+                    if (respuesta > 0)
+                    {
+                        header.estado = true;
+                        header.mensaje = "se ha registrado la especialidad";
+                    }
+                    else
+                    {
+                        header.estado = false;
+                        header.mensaje = "Especialidad se encuentra registrado";
+                    }
+
+                    cn.Close();
+                    cn.Dispose();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                header.estado = false;
+                header.mensaje = ex.Message;
+            }
+
+            return header;
+        }
     }
 }
