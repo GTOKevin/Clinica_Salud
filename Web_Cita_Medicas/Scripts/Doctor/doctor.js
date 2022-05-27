@@ -1,6 +1,6 @@
 ﻿
 
-
+var row;
 
 const getForm = () => {
     let resForm = {
@@ -9,11 +9,16 @@ const getForm = () => {
     }
 
     $("#formRegister input").each(function (e) {
-        if (this.value.trim().length > 0) {
+        if (this.name == "id_doctor") {
             resForm.doctor[this.name] = this.value;
         } else {
-            resForm.valida = false;
+            if (this.value.trim().length > 0) {
+                resForm.doctor[this.name] = this.value;
+            } else {
+                resForm.valida = false;
+            }
         }
+   
     })
 
 
@@ -33,8 +38,6 @@ const getForm = () => {
 $("#formRegister").on('submit', function (e) {
     e.preventDefault();
     let { doctor, valida } = getForm();
-
-
     if (valida) {
         $.ajax({
             method: "POST",
@@ -42,22 +45,38 @@ $("#formRegister").on('submit', function (e) {
             data: doctor,
             responseType: 'json',
             success: async function (res) {
-                console.log(res);
-
-                if (res.estado) {
+                if (res.oHeader.estado) {
+                    
                     getDoctor();
                     btnAction('cancel');
+                    Swal.fire(
+                        'Exito!',
+                         res.oHeader.mensaje,
+                        'success'
+                    )
                 } else {
-                    alert(header.mensaje);
+                    Swal.fire(
+                        'Oops!',
+                        res.oHeader.mensaje,
+                        'error'
+                    )
                 }
             },
             error: function (err) {
-                Swal.close();
+                Swal.fire(
+                    'Oops!',
+                     err,
+                    'error'
+                )
             }
 
         });
     } else {
-        alert("Ingresar todo los campos");
+        Swal.fire(
+            'Info!',
+             'por favor ingrese todos los campos',
+            'info'
+        )
     }
 })
 
@@ -103,6 +122,7 @@ getDoctor();
 
 const listarTable = (data) => {
     let bodyTable = document.getElementById("bodyTable");
+    console.log(data);
     bodyTable.innerHTML = "";
     let shtml = ``;
     if (data.length > 0) {
@@ -114,7 +134,22 @@ const listarTable = (data) => {
             shtml += `<td>${data[i].segundo_apellido}</td>`;
             shtml += `<td>${data[i].correo_doctor}</td>`;
             shtml += `<td>${data[i].telefono_doctor}</td>`;
-            shtml += `<td>${data[i].id_especialidad}</td>`;
+            shtml += `<td>${data[i].oEspecialidad.nombre_especialidad}</td>`;
+            if (data[i].estado) {
+                shtml += `<td class="font-weight-bold text-success">Activo</td>`;
+                shtml += `<td>
+                            <button class="btn btn-danger px-1 py-0" onclick="change(this,'${data[i].id_doctor}','${data[i].estado}')" ><i class="fa fa-power-off"></i></button>
+                            <button class="btn btn-info px-1 py-0" onclick="edit(this,'${data[i].id_doctor}')" ><i class="fa fa-pencil-alt"></i></button>
+                         </td>`;
+
+            } else {
+                shtml += `<td class="font-weight-bold text-danger">Inactivo</td>`;
+                shtml += `<td>
+                            <button class="btn btn-success px-1 py-0" onclick="change(this,'${data[i].id_doctor}','${data[i].estado}')"><i class="fa fa-universal-access"></i></button>
+                            <button class="btn btn-info px-1 py-0" onclick="edit(this,'${data[i].id_doctor}')" ><i class="fa fa-pencil-alt"></i></button>
+                          </td>`;
+            }
+         
             shtml += `</tr>`;
         }
     }
@@ -122,3 +157,86 @@ const listarTable = (data) => {
 
 }
 
+const change = (dt, id_doc,state) => {
+    $.ajax({
+        method: "POST",
+        url: urlChangeEstado,
+        data: { id:id_doc, estado:state},
+        responseType: 'json',
+        success: async function (res) {
+            if (res.estado) {
+                await dibujarEstado(dt,state,id_doc);
+            }
+
+        },
+        error: function (err) {
+            Swal.close();
+        }
+
+    });
+}
+
+const dibujarEstado = (dt, state,id_doc) => {
+    console.log(dt, state);
+    let parent = (dt.parentElement).parentElement;
+    console.log(parent.children);
+    let { [6]: estado, [7]: btns } = parent.children;
+    console.log(state);
+    if (state=="true") {
+        estado.innerHTML = 'Inactivo';
+        estado.classList.remove("text-success");
+        estado.classList.add("text-danger");
+        btns.innerHTML =
+           `
+                            <button class="btn btn-danger px-1 py-0" onclick="change(this,'${id_doc}','false')"><i class="fa fa-power-off"></i></button>
+                            <button class="btn btn-info px-1 py-0" onclick="edit(this,'${id_doc}')"><i class="fa fa-pencil-alt"></i></button>
+          `;
+    } else {
+        console.log("llegamos");
+        estado.innerHTML = 'Activo';
+        estado.classList.remove("text-danger");
+        estado.classList.add("text-success");
+        btns.innerHTML =
+            `
+                            <button class="btn btn-success px-1 py-0" onclick="change(this,'${id_doc}','true')"><i class="fa fa-universal-access"></i></button>
+                            <button class="btn btn-info px-1 py-0" onclick="edit(this,'${id_doc}')"><i class="fa fa-pencil-alt"></i></button>
+     `
+    }
+}
+
+const edit = (dt, id_doc) => {
+    row = dt;
+    $.ajax({
+        method: "GET",
+        url: urlListarDoc + "?id=" + id_doc,
+        responseType: 'json',
+        success: async function (res) {
+            console.log(res);
+            if (res.oHeader.estado) {
+                await viewEdit(res.oDoctor)
+                $("#divListar").hide(500);
+                $("#divRegister").show(1000);
+               
+            }
+            
+                
+        },
+        error: function (err) {
+            Swal.close();
+        }
+
+    });
+}
+
+const viewEdit = (list) => {
+    console.log(list);
+
+    $(".val").each(function (ind) {
+        for (var propName in list[0]) {
+            if (this.name === propName) {
+                this.value = list[0][propName];
+            }
+        }
+    });
+}
+//fa fa - universal - acce

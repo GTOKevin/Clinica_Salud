@@ -22,26 +22,11 @@
                     <th scope="col">Correo</th>
                     <th scope="col">Telefono</th>
                     <th scope="col">Especialidad</th>
+                    <th scope="col">Estado</th>
                 </tr>
             </thead>
             <tbody id="bodyTable">
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    @*<td>@mdo</td>*@
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    @*<td>@fat</td>*@
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    @*<td>@twitter</td>*@
-                </tr>
+                    
             </tbody>
         </table>
     </div>
@@ -51,22 +36,23 @@
             <button class="btn btn-danger ml-auto" onclick="btnAction('cancel')">Cancelar</button>
         </div>
         <form id="formRegister">
+            <input type="text" autocomplete="off" class="form-control d-none val" name="id_doctor">
             <div class="row">
                 <div class="form-group col-12 col-md-6 col-lg-4">
                     <label for="exampleInputEmail1">Nombres</label>
-                    <input type="text" autocomplete="off" class="form-control" name="nombres" placeholder="Ingrese nombres">
+                    <input type="text" autocomplete="off" class="form-control val" name="nombres" placeholder="Ingrese nombres">
                 </div>
                 <div class="form-group col-12 col-md-6 col-lg-4">
                     <label for="exampleInputEmail1">Primer Apellido</label>
-                    <input type="text" autocomplete="off" class="form-control" name="primer_apellido" placeholder="Ingrese su primer apellido">
+                    <input type="text" autocomplete="off" class="form-control val" name="primer_apellido" placeholder="Ingrese su primer apellido">
                 </div>
                 <div class="form-group col-12 col-md-6 col-lg-4">
                     <label for="exampleInputEmail1">Segundo Apellido</label>
-                    <input type="text" autocomplete="off" class="form-control" name="segundo_apellido" placeholder="Ingrese su segundo apellido">
+                    <input type="text" autocomplete="off" class="form-control val" name="segundo_apellido" placeholder="Ingrese su segundo apellido">
                 </div>
                 <div class="form-group col-12 col-md-6 col-lg-4">
                     <label for="exampleInputEmail1">Especialidad</label>
-                    <select class="form-control" name="id_especialidad">
+                    <select class="form-control val" name="id_especialidad">
                         <option value="" selected>..Seleccione..</option>
                         @foreach (var item in Model.ListaEspecialidad)
                         {
@@ -76,7 +62,7 @@
                 </div>
                 <div class="form-group col-12 col-md-6 col-lg-4">
                     <label for="exampleInputEmail1">Genero</label>
-                    <select class="form-control" name="id_genero">
+                    <select class="form-control val" name="id_genero">
                         <option value="" selected>..Seleccione..</option>
                         @foreach (var item in Model.ListaGenero)
                         {
@@ -86,16 +72,16 @@
                 </div>
                 <div class="form-group col-12 col-md-6 col-lg-4">
                     <label for="exampleInputEmail1">Telefono</label>
-                    <input type="text" autocomplete="off" class="form-control" name="telefono_doctor" placeholder="Ingrese su telefono">
+                    <input type="text" autocomplete="off" class="form-control val" name="telefono_doctor" placeholder="Ingrese su telefono">
                 </div>
                 <div class="form-group col-12 col-md-6 col-lg-4">
                     <label for="exampleInputEmail1">Correo</label>
-                    <input type="text" autocomplete="off" class="form-control" name="correo_doctor" placeholder="Ingrese su correo">
+                    <input type="text" autocomplete="off" class="form-control val" name="correo_doctor" placeholder="Ingrese su correo">
                 </div>
 
                 <div class="form-group col-12 col-md-6 col-lg-4">
                     <label for="exampleInputEmail1">Tipo Documento</label>
-                    <select class="form-control" name="id_tipo_documento">
+                    <select class="form-control val" name="id_tipo_documento">
                         <option value="" selected>..Seleccione..</option>
                         @foreach (var item in Model.ListaTipoDocumento)
                         {
@@ -105,7 +91,7 @@
                 </div>
                 <div class="form-group col-12 col-md-6 col-lg-4">
                     <label for="exampleInputEmail1">Nro Documento</label>
-                    <input type="text" autocomplete="off" class="form-control" name="dni_doctor" placeholder="Ingrese su documento">
+                    <input type="text" autocomplete="off" class="form-control val" name="dni_doctor" placeholder="Ingrese su documento">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Registrar</button>
 
@@ -116,6 +102,7 @@
 </div>
 <script>
     const urlRegistroDoc = "@Url.Action("RegistrarDoctor", "Doctor")";
-     const urlListarDoc = "@Url.Action("ListarDoctor", "Doctor")";
+    const urlListarDoc = "@Url.Action("ListarDoctor", "Doctor")";
+    const urlChangeEstado = "@Url.Action("CambiarEstado", "Doctor")";
 </script>
 <script src="~/Scripts/Doctor/doctor.js"></script>

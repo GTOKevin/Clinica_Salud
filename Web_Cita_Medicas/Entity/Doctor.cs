@@ -10,6 +10,11 @@ namespace Web_Cita_Medicas.Entity
         public Header oHeader { get; set; }
         public List<Doctor> oDoctor { get; set; }
     }
+    public class DoctorRegister
+    {
+        public Header oHeader { get; set; }
+        public int id_register { get; set; }
+    }
     public class Doctor
     {
         public int id_doctor { get; set; }
@@ -23,5 +28,7 @@ namespace Web_Cita_Medicas.Entity
         public int id_genero { get; set; }
         public int id_especialidad { get; set; }
         public int id_usuario { get; set; }
+        public bool estado { get; set; }
+        public Especialidad oEspecialidad { get; set; }
     }
 }
