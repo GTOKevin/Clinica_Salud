@@ -10649,7 +10649,7 @@ a:focus {
 
 @media (min-width:768px) {
     .sidebar {
-        width: 14rem !important
+        width: 19rem !important
     }
 
         .sidebar .nav-item .collapse {
@@ -10722,7 +10722,7 @@ a:focus {
 
         .sidebar.toggled {
             overflow: visible;
-            width: 6.5rem !important
+            width: 8.5rem !important
         }
 
             .sidebar.toggled .nav-item .collapse {

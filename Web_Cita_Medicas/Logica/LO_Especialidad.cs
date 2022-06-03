@@ -32,6 +32,7 @@ namespace Web_Cita_Medicas.Logica
                         Especialidad oEspecialidad = new Especialidad();
                         oEspecialidad.id_especialidad = Convert.ToInt32(dr["id_Especialidad"].ToString());
                         oEspecialidad.nombre_especialidad = dr["nombre_especialidad"].ToString();
+                        oEspecialidad.descripcion_especialidad = dr["descripcion_especialidad"].ToString();
                         EspecialidadList.Add(oEspecialidad);
                     }
                     cn.Close();
@@ -62,6 +63,7 @@ namespace Web_Cita_Medicas.Logica
                     SqlCommand cmd = new SqlCommand("sp_registrar_Especialidad", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@nombre_especialidad", enti.nombre_especialidad);
+                    cmd.Parameters.AddWithValue("@descripcion_especialidad", enti.descripcion_especialidad);
                     int respuesta = cmd.ExecuteNonQuery();
 
                     if (respuesta > 0)

@@ -104,6 +104,7 @@ const listarTable = (data) => {
             shtml += `<tr>`;
             shtml += `<td>${data[i].id_especialidad}</td>`;
             shtml += `<td>${data[i].nombre_especialidad}</td>`;
+            shtml += `<td>${data[i].descripcion_especialidad}</td>`;
             shtml += `</tr>`;
         }
     }

@@ -14,5 +14,6 @@ namespace Web_Cita_Medicas.Entity
     {
         public int id_especialidad { get; set; }
         public string nombre_especialidad { get; set; }
+        public string descripcion_especialidad { get; set; }
     }
 }
