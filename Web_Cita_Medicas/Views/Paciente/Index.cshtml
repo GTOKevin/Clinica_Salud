@@ -1,0 +1,95 @@
+﻿@model Web_Cita_Medicas.Models.ViewPacienteModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div id="divListar">
+        <div class="row my-2">
+
+            <button class="btn btn-success ml-auto" onclick="btnAction('new')">Nuevo</button>
+        </div>
+
+
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Primer Apellido</th>
+                    <th scope="col">Segundo Apellido</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Telefono</th>
+                </tr>
+            </thead>
+            <tbody id="bodyTable">
+            </tbody>
+        </table>
+    </div>
+
+    <div id="divRegister" style="display:none;">
+        <div class="row my-2">
+            <button class="btn btn-danger ml-auto" onclick="btnAction('cancel')">Cancelar</button>
+        </div>
+        <form id="formRegister">
+            <input type="text" autocomplete="off" class="form-control d-none val" name="id_paciente">
+            <div class="row">
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Nombres</label>
+                    <input type="text" autocomplete="off" class="form-control val" name="nombres" placeholder="Ingrese nombres">
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Primer Apellido</label>
+                    <input type="text" autocomplete="off" class="form-control val" name="primer_apellido" placeholder="Ingrese su primer apellido">
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Segundo Apellido</label>
+                    <input type="text" autocomplete="off" class="form-control val" name="segundo_apellido" placeholder="Ingrese su segundo apellido">
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Genero</label>
+                    <select class="form-control val" name="id_genero">
+                        <option value="" selected>..Seleccione..</option>
+                        @foreach (var item in Model.ListaGenero)
+                        {
+                            <option value="@item.id_genero">@item.nombre_genero</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Telefono</label>
+                    <input type="text" autocomplete="off" class="form-control val" name="telefono_paciente" placeholder="Ingrese su telefono">
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Correo</label>
+                    <input type="text" autocomplete="off" class="form-control val" name="correo_paciente" placeholder="Ingrese su correo">
+                </div>
+
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Tipo Documento</label>
+                    <select class="form-control val" name="id_tipo_documento">
+                        <option value="" selected>..Seleccione..</option>
+                        @foreach (var item in Model.ListaTipoDocumento)
+                        {
+                            <option value="@item.id_tipo_documento">@item.nombre_documento</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-6 col-lg-4">
+                    <label for="exampleInputEmail1">Nro Documento</label>
+                    <input type="text" autocomplete="off" class="form-control val" name="dni_paciente" placeholder="Ingrese su documento">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+    <script>
+    const urlRegistroPac = "@Url.Action("RegistrarPaciente", "Paciente")";
+    const urlListarPac = "@Url.Action("ListarPaciente", "Paciente")";
+
+    </script>
+    <script src="~/Scripts/Paciente/paciente.js"></script>
